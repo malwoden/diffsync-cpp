@@ -4,7 +4,7 @@
 #include <vector>
 #include <cstdint>
 
-namespace nconc {
+namespace diffsync {
 
 uint32_t
 weakHash(const std::vector<unsigned char>& data);

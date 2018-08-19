@@ -5,7 +5,7 @@
 
 #include <openssl/md5.h>
 
-namespace nconc {
+namespace diffsync {
 
 // TODO: Replace: this is a really rubbish hashing algo
 uint32_t

@@ -26,13 +26,13 @@ add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src
                  ${CMAKE_CURRENT_BINARY_DIR}/googletest-build
                  EXCLUDE_FROM_ALL)
 
-add_executable(nconcTests
+add_executable(diffsyncTests
     Hashes_test.cpp
 )
 
-target_link_libraries(nconcTests nconc gtest_main)
+target_link_libraries(diffsyncTests diffsync gtest_main)
 
 add_test(
-    NAME nconcTests
-    COMMAND nconcTests
+    NAME diffsyncTests
+    COMMAND diffsyncTests
 )
