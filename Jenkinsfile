@@ -10,18 +10,18 @@ pipeline {
         stage('Compile') {
             steps {
                 sh '''
-                	mkdir build && cd build &&
+                    mkdir -p build && cd build &&
                     conan install .. -s:build_type=Debug &&
-                	cmake -D CMAKE_BUILD_TYPE=Debug -D BUILD_TESTING=ON .. &&
-                	make
+                    cmake -D CMAKE_BUILD_TYPE=Debug -D BUILD_TESTING=ON .. &&
+                    make
                 '''
             }
         }
         stage('Test') {
             steps {
                 sh '''
-                	cd build &&
-                	ctest
+                    cd build &&
+                    ctest
                 '''
             }
         }
