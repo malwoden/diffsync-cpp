@@ -27,10 +27,14 @@ add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src
                  EXCLUDE_FROM_ALL)
 
 add_executable(diffsyncTests
+    Files_test.cpp
     Hashes_test.cpp
 )
 
 target_link_libraries(diffsyncTests diffsync gtest_main)
+
+target_compile_features(diffsyncTests PUBLIC cxx_std_17)
+set_property(TARGET diffsyncTests PROPERTY CXX_EXTENSIONS OFF)
 
 add_test(
     NAME diffsyncTests
