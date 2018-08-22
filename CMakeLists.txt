@@ -16,6 +16,8 @@ target_link_libraries(diffsync
         PRIVATE ${CONAN_LIBS}
         PRIVATE $<$<CXX_COMPILER_ID:GNU>:stdc++fs>)
 
+target_compile_options(diffsync PRIVATE -Wall -Wextra -pedantic)
+
 target_compile_features(diffsync PUBLIC cxx_std_17)
 set_property(TARGET diffsync PROPERTY CXX_EXTENSIONS OFF)
 

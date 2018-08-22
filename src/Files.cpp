@@ -2,24 +2,21 @@
 
 #include <experimental/filesystem>
 #include <fstream>
-
-namespace fs = std::experimental::filesystem;
+#include <iostream>
 
 namespace diffsync {
 
-std::vector<unsigned char> 
-readFile(fs::path path)
-{
-    std::ifstream file{path, std::ifstream::binary};
-    std::vector<unsigned char> data;
-
-    if (file) {
-        const auto size = fs::file_size(path);
-        data.resize(size);
-        file.read(reinterpret_cast<char*>(&data[0]), size);
+std::vector<unsigned char>
+readFile(const fs::path& path) {
+    if (std::ifstream file{path, std::ifstream::binary}) {
+        if (file.is_open()) {
+            return std::vector<unsigned char>(
+                std::istreambuf_iterator<char>(file),
+                std::istreambuf_iterator<char>());
+        }
     }
 
-    return data;
+    return std::vector<unsigned char>();
 }
 
 }

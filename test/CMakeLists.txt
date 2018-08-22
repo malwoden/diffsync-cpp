@@ -36,7 +36,9 @@ target_link_libraries(diffsyncTests diffsync gtest_main)
 target_compile_features(diffsyncTests PUBLIC cxx_std_17)
 set_property(TARGET diffsyncTests PROPERTY CXX_EXTENSIONS OFF)
 
+# WORKING_DIRECTORY so we can load test data relatively
 add_test(
     NAME diffsyncTests
     COMMAND diffsyncTests
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 )
