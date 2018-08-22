@@ -27,6 +27,7 @@ add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src
                  EXCLUDE_FROM_ALL)
 
 add_executable(diffsyncTests
+    AsyncHasher_test.cpp
     Files_test.cpp
     Hashes_test.cpp
 )

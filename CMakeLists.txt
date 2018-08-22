@@ -7,6 +7,7 @@ include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
 
 add_library(diffsync
+        src/AsyncHasher.cpp
         src/Files.cpp
         src/Hashes.cpp)
 
