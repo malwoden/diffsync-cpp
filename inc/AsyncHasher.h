@@ -12,9 +12,6 @@ namespace diffsync {
 
 namespace fs = std::experimental::filesystem;
 
-// TODO: this function could be generalised further as it doesn't really
-// have anything to do with hashes.
-
 /**
  * Reads the file in blocks from the current thread and calculates
  * the hash in backgrounds threads.
@@ -22,7 +19,7 @@ namespace fs = std::experimental::filesystem;
  * Returns a collection of the hashes from the file.
  */
 template <typename HashT, typename HashF>
-std::vector<HashT>
+auto
 asyncHash(const fs::path& filePath, uint32_t blockSize, HashF hashFunction) {
     std::queue<std::future<HashT>> hashFutures;
 
@@ -33,15 +30,22 @@ asyncHash(const fs::path& filePath, uint32_t blockSize, HashF hashFunction) {
         hashFutures.push(std::move(future));
     });
 
-    std::vector<HashT> hashes;
-    hashes.reserve(hashFutures.size());
+    if constexpr (!std::is_void<HashT>::value) {
+        std::vector<HashT> hashes;
+        hashes.reserve(hashFutures.size());
 
-    while (hashFutures.size() > 0) {
-        hashes.push_back(hashFutures.front().get());
-        hashFutures.pop();
+        while (hashFutures.size() > 0) {
+            hashes.push_back(hashFutures.front().get());
+            hashFutures.pop();
+        }
+
+        return hashes;
+    } else {
+        while (hashFutures.size() > 0) {
+            hashFutures.front().get();
+            hashFutures.pop();
+        }
     }
-
-    return hashes;
 }
 
 /**

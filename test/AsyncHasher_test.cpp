@@ -61,3 +61,8 @@ TEST(AsyncHasherTest, strongAndWeakHashes) {
     ASSERT_EQ(strongHashes, EXPECTED_STRONG_HASHES);
     ASSERT_EQ(weakHashes, EXPECTED_WEAK_HASHES);
 }
+
+TEST(AsyncHasherTest, voidHasher) {
+    fs::path path("testdata/1k_binary_blob");
+    diffsync::asyncHash<void>(path, 100, [](auto a){});
+}
