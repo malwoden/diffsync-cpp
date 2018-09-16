@@ -60,3 +60,19 @@ TEST(FilesTest, readFileFunctorLargerBlocksize) {
     ASSERT_EQ(callcount, 1);
 }
 
+TEST(FilesTest, readFileFunctorOffsets) {
+    fs::path path("testdata/1k_binary_blob");
+    int callcount = 0;
+
+    int32_t readCount = diffsync::readFile(path, 100, 512,
+        [&callcount] (const std::vector<unsigned char>& data) { callcount++; });
+
+    ASSERT_EQ(readCount, 512);
+    ASSERT_EQ(callcount, 6);
+}
+
+TEST(FilesTest, readBlock) {
+    fs::path path("testdata/1k_binary_blob");
+    std::vector<unsigned char> data = diffsync::readBlock(path, 512, 512);
+    ASSERT_EQ(data.size(), 512);
+}

@@ -19,4 +19,19 @@ readFile(const fs::path& path) {
     return std::vector<unsigned char>();
 }
 
+std::vector<unsigned char>
+readBlock(const fs::path& path, uint32_t blocksize, uint32_t offset) {
+    std::vector<unsigned char> data;
+
+    if (std::ifstream file{path, std::ifstream::binary}) {
+        if (file.is_open()) {
+            file.seekg(offset);
+            data.resize(blocksize);
+            file.read(reinterpret_cast<char*>(&data[0]), blocksize);
+        }
+    }
+
+    return data;
+}
+
 }

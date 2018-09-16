@@ -30,6 +30,7 @@ add_executable(diffsyncTests
     AsyncHasher_test.cpp
     Files_test.cpp
     Hashes_test.cpp
+    Delta_test.cpp
 )
 
 target_link_libraries(diffsyncTests diffsync gtest_main)

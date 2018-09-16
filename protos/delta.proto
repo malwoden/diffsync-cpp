@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+message Delta {
+  repeated Change changes = 1;
+}
+
+message Change {
+    oneof Op {
+        int32 block_reference = 1;
+        bytes raw_bytes = 2;
+    }
+}

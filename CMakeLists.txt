@@ -10,10 +10,13 @@ include(FindProtobuf)
 find_package(Protobuf REQUIRED)
 # TODO: maybe move the protbuf stuff to a sub dir as we can't customise
 #       the output dir of the generated files.
-protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS protos/block_hash.proto)
+protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS
+        protos/block_hash.proto
+        protos/delta.proto)
 
 add_library(diffsync
         src/AsyncHasher.cpp
+        src/Delta.cpp
         src/Files.cpp
         src/Hashes.cpp
         src/Protocols.cpp
