@@ -2,7 +2,7 @@
 
 namespace diffsync {
 
-std::vector<std::tuple<uint32_t, std::vector<unsigned char>>>
+Hashes
 asyncStrongAndWeakHash(const fs::path& filePath, uint32_t blockSize) {
     return asyncHash<std::tuple<uint32_t, std::vector<unsigned char>>>(filePath, blockSize,
         [] (const auto& data) {

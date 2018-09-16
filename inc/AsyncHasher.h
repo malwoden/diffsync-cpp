@@ -5,6 +5,7 @@
 #include <future>
 #include <queue>
 
+#include "DiffSync.h"
 #include "Files.h"
 #include "Hashes.h"
 
@@ -51,7 +52,7 @@ asyncHash(const fs::path& filePath, uint32_t blockSize, HashF hashFunction) {
 /**
  * Reads the file in blocks and collects both the strong and the weak hashes.
  */
-std::vector<std::tuple<uint32_t, std::vector<unsigned char>>>
+Hashes
 asyncStrongAndWeakHash(const fs::path& filePath, uint32_t blockSize);
 
 }

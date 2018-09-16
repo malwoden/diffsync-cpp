@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+message BlockHash {
+  int32 block_index = 1;
+  int32 weak_hash = 2;
+  bytes strong_hash = 3;
+}
+
+message BlockHashes {
+    repeated BlockHash hash = 1;
+}
