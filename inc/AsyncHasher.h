@@ -52,7 +52,7 @@ asyncHash(const fs::path& filePath, uint32_t blockSize, HashF hashFunction) {
 /**
  * Reads the file in blocks and collects both the strong and the weak hashes.
  */
-Hashes
+HashVector
 asyncStrongAndWeakHash(const fs::path& filePath, uint32_t blockSize);
 
 }

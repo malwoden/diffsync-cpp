@@ -6,6 +6,6 @@
 
 namespace diffsync {
 
-BlockHashes encode(const Hashes& hashes);
+BlockHashes encode(const HashVector& hashes);
 
 } // namespace diffsync

@@ -8,15 +8,13 @@
 
 using namespace diffsync;
 
-// namespace fs = std::experimental::filesystem;
+auto
+transformHashes(HashVector hashes) {
+    std::unordered_multimap<WeakHash, std::tuple<StrongHash, uint32_t>> map(hashes.size());
 
-std::unordered_map<WeakHash, std::tuple<StrongHash, uint32_t>>
-transformHashes(Hashes hashes) {
-    std::unordered_map<WeakHash, std::tuple<StrongHash, uint32_t>> map(hashes.size());
-
-    auto index = 0;
-    for (auto&&[first, second] : hashes) {
-        map[first] = std::make_tuple(second, index);
+    uint32_t index = 0;
+    for (auto&&[weak, strong] : hashes) {
+        map.emplace(std::make_pair(weak, std::make_tuple(strong, index)));
         index++;
     }
 
@@ -30,12 +28,12 @@ TEST(DeltaTest, createAndApplyDelta) {
     // this results in the file being written to the testdata dir, which is not ideal
     fs::path deltaApplied("testdata/delta_applied.bmp");
 
-    Hashes hashes = asyncStrongAndWeakHash(original, blockSize);
+    HashVector hashes = asyncStrongAndWeakHash(original, blockSize);
     ASSERT_EQ(88, hashes.size());
 
     Delta delta = calculateDelta(updated, blockSize, transformHashes(hashes));
 
-    ASSERT_EQ(48, delta.changes_size());
+    ASSERT_EQ(35, delta.changes_size());
 
     applyDelta(delta, original, deltaApplied, blockSize);
 

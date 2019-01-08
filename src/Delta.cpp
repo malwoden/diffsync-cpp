@@ -8,7 +8,7 @@ namespace diffsync {
 
 Delta
 calculateDelta(const fs::path& file, uint32_t blocksize,
-    std::unordered_map<WeakHash, std::tuple<StrongHash, uint32_t>> hashes) {
+    std::unordered_multimap<WeakHash, std::tuple<StrongHash, uint32_t>> hashes) {
 
     Delta delta;
     uint32_t offset = 0;
@@ -35,9 +35,9 @@ calculateDelta(const fs::path& file, uint32_t blocksize,
         }
         blockFound = false;
 
-        auto weakHashMatch = hashes.find(weak);
-        if (weakHashMatch != hashes.end()) {
-            auto[strong, index] = weakHashMatch->second;
+        auto range = hashes.equal_range(weak);
+        for (auto it = range.first; it != range.second; ++it) {
+            auto[strong, index] = it->second;
 
             if (strong == strongHash(data)) {
                 // 'flush' out any uncommitted raw bytes to the delta
@@ -48,6 +48,7 @@ calculateDelta(const fs::path& file, uint32_t blocksize,
 
                 delta.add_changes()->set_block_reference(index);
                 blockFound = true;
+                break;
             }
         }
 

@@ -3,7 +3,7 @@
 
 namespace diffsync{
 
-BlockHashes encode(const Hashes& hashes) {
+BlockHashes encode(const HashVector& hashes) {
     BlockHashes blockHashes;
     int blockIndex = 0;
 

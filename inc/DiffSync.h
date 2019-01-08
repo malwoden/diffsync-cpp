@@ -11,9 +11,6 @@ namespace diffsync {
 typedef uint32_t WeakHash;
 typedef std::vector<unsigned char> StrongHash;
 typedef std::tuple<WeakHash, StrongHash> HashPair;
-
-// TODO: there is a problem with this as it doesn't allow for weak hash collisions.
-//       each weak has can have 1..* associated strong hashes
-typedef std::vector<HashPair> Hashes;
+typedef std::vector<HashPair> HashVector;
 
 } // namespace diffsync
