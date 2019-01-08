@@ -31,6 +31,10 @@ asyncHash(const fs::path& filePath, uint32_t blockSize, HashF hashFunction) {
         hashFutures.push(std::move(future));
     });
 
+    // function is called 'asyncHash' but it is actually more general than that,
+    // it is a function that allows the caller to process blocks of a file
+    // concurrently with a given function, so we will handle the void return case
+    // in the event the function doens't return anything.
     if constexpr (!std::is_void<HashT>::value) {
         std::vector<HashT> hashes;
         hashes.reserve(hashFutures.size());
