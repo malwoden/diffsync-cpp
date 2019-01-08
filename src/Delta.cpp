@@ -6,8 +6,6 @@
 
 namespace diffsync {
 
-// FIXME: one of these functions is bugged as the generated file is not the same size
-
 Delta
 calculateDelta(const fs::path& file, uint32_t blocksize,
     std::unordered_map<WeakHash, std::tuple<StrongHash, uint32_t>> hashes) {
@@ -53,16 +51,22 @@ calculateDelta(const fs::path& file, uint32_t blocksize,
             }
         }
 
-        if (!blockFound) {
-            rawBytes.push_back(data[0]);
-        }
-
         if (data.size() < blocksize) {
+            // this is the last block of data
+            // capture any remaining unmatched block data before we add it as the final raw byte change
+            if (!blockFound) {
+                rawBytes.insert(rawBytes.end(), data.begin(), data.end());
+            }
+
             if (rawBytes.size() > 0) {
                 delta.add_changes()->set_raw_bytes(&rawBytes[0], rawBytes.size());
                 rawBytes.clear();
             }
             break;
+        }
+
+        if (!blockFound) {
+            rawBytes.push_back(data[0]);
         }
 
         offset += blockFound ? blocksize : 1;
